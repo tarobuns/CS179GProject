@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Models</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #00000054;
+        }
+        tr {
+            background-color: #242424;
+        }
+        th, tr {
+            color: rgb(0, 224, 0)
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        #data-table {
+            border-collapse: collapse;
+            width: 75%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #fetch-data-btn {
+            margin-bottom: 25px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#fetch-data-btn').click(function() {
+                $.ajax({
+                    url: '/api',
+                    type: 'GET',
+                    success: function(response) {
+                        var tableBody = $('#data-table tbody');
+                        var index=1;
+                        tableBody.empty();
+                        response.forEach(function(item) {
+                            var row = $('<tr>');
+                            $('<td>').text(index).appendTo(row);
+                            $('<td>').text(item.created_at).appendTo(row);
+                            $('<td>').text(item.elapsed_time).appendTo(row);
+                            $('<td>').text(item.hdfs_path).appendTo(row);
+                            $('<td>').text(item.accuracy).appendTo(row);
+                            $('<td>').text(item.model).appendTo(row);
+                            tableBody.append(row);
+                            index++;
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="signature">University of California, Riverside</div>
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Available Models</h1>
+        <form action="/" method="get">
+            <button type="submit" id="home-btn" style="font-size: 1.5rem">Home</button>
+        </form>
+        <button id="fetch-data-btn" style="font-size: 1.5rem;">Fetch Models from MySQL</button>
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Created At</th>
+                    <th>Elapsed Time</th>
+                    <th>HDFS Path</th>
+                    <th>Accuracy</th>
+                    <th>Model</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <br>
+        <form action="{{ url_for('upload_file') }}" method="get" enctype="text/plain">
+            <label for="value" style="color: rgb(224, 0, 0); background-color: black; padding: 7px; font-size: 1rem; border-radius: 5px;">Select the index of the model you wish to use:</label>
+            <input type="number" id="value" name="value" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

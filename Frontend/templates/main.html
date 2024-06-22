@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        img {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="signature">University of California, Riverside</div>
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Toyota Car Model Classification System</h1>
+        <h3 class="my-4">Created by CS179G Team5</h3>
+        <div class="list-group mb-4">
+            <h4 class="list-group-item">Seung Pyo Lee / slee809</h4>
+            <h4 class="list-group-item">Varun Narayanan / vnara009</h4>
+            <h4 class="list-group-item">Joel Maya / jmaya009</h4>
+            <h4 class="list-group-item">Matthew Ramer / mrame006</h4>
+        </div>
+        <img src="https://ca-times.brightspotcdn.com/dims4/default/2e5341f/2147483647/strip/true/crop/3900x2600+0+0/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fc0%2Fb2%2Fb369d35a418aa89a444017de2365%2Fla-photos-1staff-749868-me-0407-uc-riverside-campus-1-gmf.jpg" alt="Team Image" class="img-fluid mb-4" width="500" height="600">
+        <form action="/models" method="get">
+            <button type="submit" style="font-size: 1.5rem">Start</button>
+        </form>
+    </div>
+</body>
+</html>

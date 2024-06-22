@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Toyota Classification</title>
+  </head>
+  <body>
+    <h1>Toyota Classification</h1>
+    <br>
+
+    {% if path and name%}
+      <h3>algorithm: {{name}}</h3>
+      <h3>path: {{path}}</h3>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if filename %}
+      <h2>Uploaded Image:</h2>
+      <img src="{{ url_for('send_file', filename=filename) }}" alt="Uploaded Image">
+      {% if result %}
+      <h2> Model's prediction: {{ result }}</h2>
+      <form action="/models" method="get"><button type="submit">Restart</button>
+      {% endif %}
+    {% endif %}
+  </body>
+</html>

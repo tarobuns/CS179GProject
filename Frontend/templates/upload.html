@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Upload</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        h2,h3 {
+          color: rgb(0, 224, 0);
+        }
+        h2 {
+          font-size: 3rem;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="signature">University of California, Riverside</div>
+    <div class="container text-center mt-5">
+      <h1>Upload Image</h1>
+      <form action="/" method="get">
+        <button type="submit" id="home-btn" style="font-size: 1.5rem">Home</button>
+      </form>
+      <br>
+      {% if path and name%}
+        <h3>Index of Model: <span style="color:red;">{{index}}</span></h3>
+        <h3>Algorithm Used: <span style="color:red;">{{name}}</span></h3>
+        <h3>Local Path to Model: <span style="color:red;">{{path}}</span></h3>
+      {% endif %}
+      {% if not filename%}
+      <form method="post" enctype="multipart/form-data">
+        <input type="text" name="index" id="index" value="{{ index }}" readonly style="display:none">
+        <input type="file" name="file" style="background-color: #000ba5; color: rgb(0, 255, 0); border: none; padding: 8px 20px; font-size: 16px; border-radius: 5px;">
+        <input type="submit" value="Upload" class="button">
+      </form>
+      {% endif %}
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul style="list-style-type: none; padding: 0;">
+          {% for message in messages %}
+            <li><span style="color:red;">{{ message }}</span></li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      {% if filename %}
+        <h2>Uploaded Image:</h2>
+        <img src="{{ url_for('send_file', filename=filename) }}" alt="Uploaded Image">
+        {% if result %}
+        <h2><span style="background-color:rgb(31, 31, 31); padding:5px; border-radius: 5px;">You have uploaded an image of: <span style="color:red;">{{ result }}</span></span></h2>
+        <form action="/models" method="get"><button type="submit" style="font-size: 1.5rem">Restart</button>
+        {% endif %}
+      {% endif %}
+    </div>
+  </body>
+</html>
